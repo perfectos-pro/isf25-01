@@ -24,7 +24,7 @@ fetch('ColorDiffusionFlow.fs')
       uniform vec4 color2;
     `;
 
-    const frag = isfCompatUniforms + "\\n" + rawFrag;
+    const frag = isfCompatUniforms + "\n" + rawFrag;
 
     const vertexSrc = `
       attribute vec4 position;
