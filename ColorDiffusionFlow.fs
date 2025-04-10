@@ -1,3 +1,7 @@
+precision mediump float;
+uniform float iTime;
+uniform vec2 iResolution;
+
 void main() {
   float T = iTime * 1.9;
   float TT = iTime * 0.6;
