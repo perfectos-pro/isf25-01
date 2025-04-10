@@ -7,7 +7,25 @@ canvas.height = window.innerHeight;
 // Load shader file
 fetch('ColorDiffusionFlow.fs')
   .then(res => res.text())
-  .then(frag => {
+  .then(rawFrag => {
+    const isfCompatUniforms = `
+      precision mediump float;
+      uniform float TIME;
+      uniform vec2 RENDERSIZE;
+      uniform vec4 DATE;
+      varying vec2 isf_FragNormCoord;
+
+      uniform float rate1;
+      uniform float rate2;
+      uniform float depthX;
+      uniform float nudge;
+      uniform float loopCycle;
+      uniform vec4 color1;
+      uniform vec4 color2;
+    `;
+
+    const frag = isfCompatUniforms + "\\n" + rawFrag;
+
     const vertexSrc = `
       attribute vec4 position;
       void main() {
