@@ -8,26 +8,7 @@ canvas.height = window.innerHeight;
 fetch('ColorDiffusionFlow.fs')
   .then(res => res.text())
   .then(rawFrag => {
-    const isfCompatUniforms = `
-      precision mediump float;
-      uniform float TIME;
-      uniform vec2 RENDERSIZE;
-      uniform vec4 DATE;
-      varying vec2 isf_FragNormCoord;
-
-      uniform float rate1;
-      uniform float rate2;
-      uniform float depthX;
-      uniform float nudge;
-      uniform float loopCycle;
-      uniform vec4 color1;
-      uniform vec4 color2;
-      uniform float depthY;
-      uniform float cycle1;
-      uniform float cycle2;
-    `;
-
-    const frag = isfCompatUniforms + "\n" + rawFrag;
+    const frag = rawFrag;
 
     const vertexSrc = `
       attribute vec4 position;
@@ -86,15 +67,11 @@ fetch('ColorDiffusionFlow.fs')
       const res = [canvas.width, canvas.height];
       gl.viewport(0, 0, canvas.width, canvas.height);
 
-      const uTime = gl.getUniformLocation(program, "TIME");
-      const uRes = gl.getUniformLocation(program, "RENDERSIZE");
-      const uDate = gl.getUniformLocation(program, "DATE");
+      const iTime = gl.getUniformLocation(program, "iTime");
+      const iResolution = gl.getUniformLocation(program, "iResolution");
 
-      gl.uniform1f(uTime, t);
-      gl.uniform2f(uRes, res[0], res[1]);
-
-      const d = new Date();
-      gl.uniform4f(uDate, d.getFullYear(), d.getMonth()+1, d.getDate(), d.getSeconds());
+      gl.uniform1f(iTime, t);
+      gl.uniform2f(iResolution, res[0], res[1]);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       requestAnimationFrame(render);
