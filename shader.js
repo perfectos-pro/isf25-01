@@ -22,6 +22,9 @@ fetch('ColorDiffusionFlow.fs')
       uniform float loopCycle;
       uniform vec4 color1;
       uniform vec4 color2;
+      uniform float depthY;
+      uniform float cycle1;
+      uniform float cycle2;
     `;
 
     const frag = isfCompatUniforms + "\n" + rawFrag;
